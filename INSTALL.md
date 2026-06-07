@@ -31,13 +31,22 @@ voice-jp 自己不会连微信。它需要 WeFlow 帮忙读取微信里的语音
 
 ## 步骤 2：装 voice-jp
 
-1. 把 **voice-jp.dmg**（22MB，从我这里发给你的文件）保存到 Downloads
+1. 下载 **voice-jp.dmg**（22MB）：https://github.com/indulgers/voice-jp/releases/download/v0.1.0/voice-jp.dmg
 2. 双击 dmg，把 **voice-jp.app** 拖进 **Applications**
-3. 打开 Applications，**右键点击 voice-jp → 「打开」**
-4. 弹出"无法验证开发者"的对话框，点 **「打开」**
+3. **关键一步**：跑一条命令去掉 macOS 安全标记，否则会报"voice-jp 已损坏"（Sequoia 新规矩）。
+   - 打开「**终端**」（聚焦搜索 ⌘+空格 → 输入 `Terminal` → 回车）
+   - 把下面这一行**完整复制**进去，按回车：
+     ```
+     xattr -cr /Applications/voice-jp.app
+     ```
+   - 没任何输出 = 成功
+4. 双击 Applications 里的 **voice-jp** 启动
 5. 几秒后，**浏览器会自动弹出一个标签页**（地址是 `http://localhost:7788`）
 
 如果浏览器没自动弹，自己手动复制粘贴这个地址打开。
+
+> 💡 步骤 3 是因为 voice-jp 是免费的个人项目，没付苹果 $99/年签名费。
+> 命令的作用：告诉 macOS「这个 app 我信任，不是从网上下的"危险文件"」。一次性，以后不用再跑。
 
 ---
 
@@ -98,7 +107,8 @@ voice-jp 自己不会连微信。它需要 WeFlow 帮忙读取微信里的语音
 |---|---|
 | 浏览器显示"WeFlow に接続できません" | WeFlow 没开 / 退出了 / 没登录 → 重启 WeFlow，重新登录 |
 | 朋友发了语音但没出现 | 1) 微信 PC 端要登录并接收到这条消息 2) 这个联系人不在白名单里 → 设置里加上 |
-| voice-jp 打开报"无法验证开发者" | 一定要**右键 → 打开**，不能双击。第一次确认后下次双击就行了 |
+| voice-jp 打开报"已损坏，无法打开" | 没跑步骤 2 第 3 步那条命令。打开终端执行 `xattr -cr /Applications/voice-jp.app` |
+| voice-jp 打开报"无法验证开发者" | 老版本 macOS 的提示。右键点 voice-jp → 「打开」，弹窗里再点「打开」 |
 | 模型下载失败 | 重新点「ダウンロード開始」会自动续传 |
 | 想转其他语言（不是日语） | 设置里改「言語」下拉，选 ja / zh / auto |
 
