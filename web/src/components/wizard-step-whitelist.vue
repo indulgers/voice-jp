@@ -71,29 +71,29 @@ onMounted(async () => {
 
 <template>
   <section class="step">
-    <h2>4. 監視する連絡先 + 音声言語を選択</h2>
+    <h2>4. 选择要监听的联系人 + 语音的语言</h2>
     <p class="hint">
-      ここで選んだ人の音声メッセージだけが自動転写されます。後で「設定」から変更できます。
+      只有勾选的人发的语音消息才会自动转写。后面可以随时从「设置」改。
     </p>
 
     <label class="lang-row">
-      言語:
+      语言:
       <select v-model="language">
-        <option value="ja">日本語</option>
-        <option value="zh">中国語</option>
-        <option value="auto">自動検出</option>
+        <option value="ja">日语</option>
+        <option value="zh">中文</option>
+        <option value="auto">自动检测</option>
       </select>
     </label>
 
     <input
       v-model="query"
       type="text"
-      placeholder="名前 / 微信号 / wxid で検索…"
+      placeholder="按昵称 / 备注 / 微信号 / wxid 搜索…"
       class="search"
     />
 
     <div class="list">
-      <p v-if="loadingContacts" class="hint">読み込み中…</p>
+      <p v-if="loadingContacts" class="hint">加载中…</p>
       <button
         v-for="c in contacts"
         :key="c.username"
@@ -107,9 +107,9 @@ onMounted(async () => {
     </div>
 
     <footer>
-      <span class="count">{{ selectedCount }} 人選択中</span>
+      <span class="count">已选 {{ selectedCount }} 人</span>
       <button class="primary" @click="save" :disabled="saving || selectedCount === 0">
-        {{ saving ? '保存中…' : '保存して完了' }}
+        {{ saving ? '保存中…' : '保存并完成' }}
       </button>
     </footer>
   </section>

@@ -53,11 +53,11 @@ onBeforeUnmount(() => es?.close())
 
 <template>
   <section class="step">
-    <h2>3. 音声認識モデル (ggml-large-v3, 約 3GB) をダウンロード</h2>
+    <h2>3. 下载语音识别模型 (ggml-large-v3, 约 3GB)</h2>
     <p class="hint">
-      最初の 1 回だけ、Whisper モデルをローカルに保存します。インターネット回線にもよりますが 5–15 分かかります。
+      仅首次下载，之后一直用本地的模型，永久离线。下载时间取决于网速，一般 5–15 分钟，可以离开做别的，不用守着。
     </p>
-    <div v-if="ready && !downloading" class="state ok">✓ モデル準備完了</div>
+    <div v-if="ready && !downloading" class="state ok">✓ 模型已就绪</div>
     <div v-else-if="downloading" class="progress-wrap">
       <div class="bar"><div class="fill" :style="{ width: (ratio * 100) + '%' }" /></div>
       <div class="progress-text">
@@ -65,13 +65,13 @@ onBeforeUnmount(() => es?.close())
         <span v-if="total">· {{ fmtGB(downloaded) }} / {{ fmtGB(total) }} GB</span>
       </div>
     </div>
-    <p v-if="errorMsg" class="error">エラー: {{ errorMsg }}（再試行してください）</p>
+    <p v-if="errorMsg" class="error">出错了：{{ errorMsg }}（再点一次重试可续传）</p>
     <button
       v-if="!ready"
       @click="startDownload"
       :disabled="downloading"
     >
-      {{ downloading ? 'ダウンロード中…' : 'ダウンロード開始' }}
+      {{ downloading ? '下载中…' : '开始下载' }}
     </button>
   </section>
 </template>

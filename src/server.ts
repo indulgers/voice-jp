@@ -24,7 +24,7 @@ import { isBundled, webDistDir } from './paths.ts'
   await refreshContacts(config)
   setInterval(() => refreshContacts(getConfig()), 10 * 60 * 1000)
 
-  startSseLoop(config, async (event, data) => {
+  startSseLoop(async (event, data) => {
     if (event !== 'message.new') return
     const msg = extractMessage(data)
     if (!msg) return

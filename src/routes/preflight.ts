@@ -32,7 +32,7 @@ export async function handlePreflight(config: AppConfig): Promise<Response> {
 
 async function ping(config: AppConfig): Promise<boolean> {
   try {
-    const res = await fetch(weflowUrl(config, '/health'), { signal: AbortSignal.timeout(1000) })
+    const res = await fetch(weflowUrl(config, '/health'), { signal: AbortSignal.timeout(3000) })
     return res.ok
   } catch {
     return false
@@ -44,7 +44,7 @@ async function checkToken(config: AppConfig): Promise<boolean> {
   try {
     const res = await fetch(weflowUrl(config, '/api/v1/sessions'), {
       headers: authHeaders(config),
-      signal: AbortSignal.timeout(2000),
+      signal: AbortSignal.timeout(8000),
     })
     return res.ok
   } catch {

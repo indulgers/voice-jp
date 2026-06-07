@@ -9,15 +9,15 @@ const audioUrl = computed(() => `/api/audio/${encodeURIComponent(props.row.serve
 const displayName = computed(() => props.row.sender_name || props.row.sender_username)
 const timeLabel = computed(() => {
   const d = new Date(props.row.created_at * 1000)
-  return d.toLocaleString('ja-JP', { hour: '2-digit', minute: '2-digit', month: 'short', day: 'numeric' })
+  return d.toLocaleString('zh-CN', { hour: '2-digit', minute: '2-digit', month: 'short', day: 'numeric' })
 })
 const durationLabel = computed(() => (props.row.duration_sec ? `${props.row.duration_sec}s` : ''))
 const statusClass = computed(() => `status status-${props.row.status}`)
 const statusLabel = computed(() => {
   switch (props.row.status) {
-    case 'pending': return '転写中…'
-    case 'done': return '完了'
-    case 'failed': return '失敗'
+    case 'pending': return '转写中…'
+    case 'done': return '完成'
+    case 'failed': return '失败'
   }
 })
 </script>
@@ -34,7 +34,7 @@ const statusLabel = computed(() => {
     <p v-else class="placeholder">…</p>
     <footer>
       <audio v-if="row.audio_path" :src="audioUrl" controls preload="none" />
-      <button v-if="row.status === 'failed'" class="retry" @click="emit('retry', row.server_id)">再試行</button>
+      <button v-if="row.status === 'failed'" class="retry" @click="emit('retry', row.server_id)">重试</button>
     </footer>
   </article>
 </template>

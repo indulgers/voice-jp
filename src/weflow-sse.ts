@@ -1,19 +1,30 @@
-import type { AppConfig, WeflowMessage } from './types.ts'
+import type { WeflowMessage } from './types.ts'
 import { authHeaders, weflowUrl } from './weflow-http.ts'
 import { publish } from './event-bus.ts'
+import { getConfig, onConfigChange } from './config.ts'
 
 type Handler = (event: string, data: unknown) => void | Promise<void>
 
-export function startSseLoop(config: AppConfig, handler: Handler): void {
+export function startSseLoop(handler: Handler): void {
   let abort: AbortController | null = null
   let stopped = false
+  let currentToken = getConfig().weflowToken
+  let reconnectTimer: ReturnType<typeof setTimeout> | null = null
+
+  const scheduleReconnect = (ms: number) => {
+    if (reconnectTimer) clearTimeout(reconnectTimer)
+    if (stopped) return
+    reconnectTimer = setTimeout(connect, ms)
+  }
 
   const connect = async (): Promise<void> => {
     if (stopped) return
     abort = new AbortController()
-    const url = weflowUrl(config, '/api/v1/push/messages', config.weflowToken ? { access_token: config.weflowToken } : undefined)
+    const cfg = getConfig()
+    currentToken = cfg.weflowToken
+    const url = weflowUrl(cfg, '/api/v1/push/messages', cfg.weflowToken ? { access_token: cfg.weflowToken } : undefined)
     try {
-      const res = await fetch(url, { signal: abort.signal, headers: { Accept: 'text/event-stream', ...authHeaders(config) } })
+      const res = await fetch(url, { signal: abort.signal, headers: { Accept: 'text/event-stream', ...authHeaders(cfg) } })
       if (!res.ok || !res.body) throw new Error(`SSE responded ${res.status}`)
       console.log('[sse] connected', url)
       publish({ type: 'weflow-status', connected: true })
@@ -23,14 +34,24 @@ export function startSseLoop(config: AppConfig, handler: Handler): void {
       if (!stopped) console.warn('[sse] error:', (err as Error).message, '→ reconnect in 3s')
       publish({ type: 'weflow-status', connected: false })
     }
-    if (!stopped) setTimeout(connect, 3000)
+    scheduleReconnect(3000)
   }
+
+  // Restart immediately when token changes (wizard saved a new one, or user edited config.json).
+  onConfigChange(next => {
+    if (next.weflowToken !== currentToken) {
+      console.log('[sse] token changed → reconnect now')
+      if (abort) abort.abort()
+      scheduleReconnect(50)
+    }
+  })
 
   connect()
 
   process.on('SIGINT', () => {
     stopped = true
     abort?.abort()
+    if (reconnectTimer) clearTimeout(reconnectTimer)
   })
 }
 

@@ -5,10 +5,10 @@ const emit = defineEmits<{ (e: 'saved'): void; (e: 'reset'): void }>()
 
 <template>
   <details class="panel">
-    <summary>⚙ 設定 (whitelist / 言語)</summary>
+    <summary>⚙ 设置（监听联系人 / 语言）</summary>
     <div class="body">
       <WizardStepWhitelist @saved="emit('saved')" />
-      <button class="reset" @click="emit('reset')">セットアップウィザードをやり直す</button>
+      <button class="reset" @click="emit('reset')">重新跑一遍初始化</button>
     </div>
   </details>
 </template>

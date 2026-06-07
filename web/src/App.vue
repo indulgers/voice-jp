@@ -46,13 +46,13 @@ onBeforeUnmount(stopPolling)
     <template v-else>
       <h1>voice-jp <span class="badge">{{ rows.length }}</span></h1>
 
-      <div v-if="!weflowConnected" class="banner danger">WeFlow に接続できません。WeFlow を起動してください。</div>
-      <div v-else-if="!streamConnected" class="banner warn">サーバとの接続が切断されました。再接続中…</div>
+      <div v-if="!weflowConnected" class="banner danger">连不上 WeFlow。请确认 WeFlow 在运行，并且已在它的设置里开启 HTTP API + Message Push。</div>
+      <div v-else-if="!streamConnected" class="banner warn">与后台的连接断开了，正在重连…</div>
 
       <Settings @saved="refreshPreflight" @reset="onReopenWizard" />
 
       <section v-if="rows.length === 0" class="empty">
-        まだメッセージがありません。whitelist のユーザーから音声を受信すると、ここに転写結果が表示されます。
+        还没有消息。监听列表里的人发语音后，转写结果会出现在这里。
       </section>
 
       <MessageRow v-for="row in rows" :key="row.server_id" :row="row" @retry="retry" />

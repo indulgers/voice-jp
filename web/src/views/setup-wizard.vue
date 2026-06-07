@@ -20,7 +20,7 @@ const currentStep = computed<1 | 2 | 3 | 4>(() => {
 <template>
   <div class="wizard">
     <header class="header">
-      <h1>voice-jp セットアップ</h1>
+      <h1>voice-jp 初始化</h1>
       <ol class="dots">
         <li v-for="n in 4" :key="n" :class="{ active: n === currentStep, done: n < currentStep }">{{ n }}</li>
       </ol>

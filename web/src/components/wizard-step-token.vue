@@ -9,7 +9,7 @@ const error = ref('')
 
 const save = async () => {
   if (!token.value.trim()) {
-    error.value = 'token を入力してください'
+    error.value = '请先粘贴 token'
     return
   }
   saving.value = true
@@ -21,7 +21,7 @@ const save = async () => {
       body: JSON.stringify({ weflowToken: token.value.trim() }),
     })
     if (!res.ok) {
-      error.value = `保存に失敗 (${res.status})`
+      error.value = `保存失败 (${res.status})`
       return
     }
     token.value = ''
@@ -34,9 +34,9 @@ const save = async () => {
 
 <template>
   <section class="step">
-    <h2>2. WeFlow の access_token を貼り付け</h2>
+    <h2>2. 粘贴 WeFlow 的 access_token</h2>
     <p class="hint">
-      WeFlow を開き、<strong>設定 → HTTP API</strong> の項目にある access_token をコピーしてください（UUID 形式の文字列）。
+      打开 WeFlow，进入<strong>设置 → HTTP API</strong>，复制其中的 access_token（一串 UUID 格式的字符）。
     </p>
     <textarea
       v-model="token"
@@ -44,9 +44,9 @@ const save = async () => {
       rows="2"
     />
     <p v-if="error" class="error">{{ error }}</p>
-    <p v-if="valid" class="ok">✓ 現在保存されている token は有効です</p>
+    <p v-if="valid" class="ok">✓ 已保存的 token 有效</p>
     <button @click="save" :disabled="saving || !token.trim()">
-      {{ saving ? '保存中…' : '保存して検証' }}
+      {{ saving ? '保存中…' : '保存并验证' }}
     </button>
   </section>
 </template>

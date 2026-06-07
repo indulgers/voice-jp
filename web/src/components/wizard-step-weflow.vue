@@ -5,19 +5,19 @@ defineEmits<{ (e: 'retry'): void }>()
 
 <template>
   <section class="step">
-    <h2>1. WeFlow を起動してください</h2>
+    <h2>1. 启动 WeFlow</h2>
     <p class="hint">
-      voice-jp は WeFlow を通して微信からメッセージを取得します。WeFlow が <code>http://127.0.0.1:5031</code> で動いている必要があります。
+      voice-jp 通过 WeFlow 从微信获取消息。请先确保 WeFlow 正在 <code>http://127.0.0.1:5031</code> 上运行。
     </p>
     <ol class="steps">
-      <li>Applications から WeFlow を起動</li>
-      <li>WeChat にログイン（QR コードスキャン）</li>
-      <li>WeFlow の設定で <strong>HTTP API</strong> と <strong>Message Push</strong> を有効化</li>
+      <li>从 Applications 启动 WeFlow</li>
+      <li>扫码登录微信</li>
+      <li>在 WeFlow 设置里勾选 <strong>HTTP API</strong> 和 <strong>Message Push</strong></li>
     </ol>
     <div class="state" :class="{ ok: reachable, fail: !reachable }">
-      {{ reachable ? '✓ WeFlow を検出しました' : '✗ WeFlow に接続できません' }}
+      {{ reachable ? '✓ 已检测到 WeFlow' : '✗ 还连不上 WeFlow' }}
     </div>
-    <button v-if="!reachable" @click="$emit('retry')">再試行</button>
+    <button v-if="!reachable" @click="$emit('retry')">重试</button>
   </section>
 </template>
 
