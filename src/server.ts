@@ -5,6 +5,7 @@ import { refreshContacts } from './contacts-cache.ts'
 import { startSseLoop, extractMessage } from './weflow-sse.ts'
 import { ingestMessage } from './ingest.ts'
 import { replayRecent } from './replay.ts'
+import { resumePending } from './resume.ts'
 import { handleStream } from './routes/stream.ts'
 import { handleMessages } from './routes/messages.ts'
 import { handleRetry } from './routes/retry.ts'
@@ -35,6 +36,7 @@ import { isBundled, webDistDir } from './paths.ts'
     }
   })
 
+  resumePending(getConfig())
   replayRecent(getConfig()).catch(err => console.warn('[replay] failed', (err as Error).message))
 
   onConfigChange(next => {

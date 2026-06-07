@@ -51,6 +51,7 @@ const getByIdStmt = db.prepare<MessageRow, Bindings>(
   `SELECT * FROM messages WHERE server_id=$server_id`,
 )
 const allIdsStmt = db.prepare<{ server_id: string }, []>(`SELECT server_id FROM messages`)
+const pendingStmt = db.prepare<MessageRow, []>(`SELECT * FROM messages WHERE status='pending' ORDER BY created_at ASC`)
 
 export function insertPending(input: {
   server_id: string
@@ -110,6 +111,10 @@ export function getById(serverId: string): MessageRow | null {
 export function knownServerIds(): Set<string> {
   const rows = allIdsStmt.all()
   return new Set(rows.map(r => r.server_id))
+}
+
+export function pendingRows(): MessageRow[] {
+  return pendingStmt.all()
 }
 
 export { db }
