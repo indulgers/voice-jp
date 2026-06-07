@@ -1,0 +1,13 @@
+{
+  "weflowBase": "http://127.0.0.1:5031",
+  "weflowToken": "",
+  "port": 7788,
+  "whisperBin": "./bin/whisper-cli",
+  "whisperModel": "./models/ggml-large-v3.bin",
+  "whisperLanguage": "ja",
+  "whisperThreads": 8,
+  "whisperTimeoutMs": 120000,
+  "concurrency": 1,
+  "replayHours": 24,
+  "whitelist": []
+}

@@ -1,0 +1,14 @@
+node_modules
+bun.lockb
+voice-jp.db
+voice-jp.db-journal
+voice-jp.db-shm
+voice-jp.db-wal
+cache/
+models/
+bin/
+dist/
+config.json
+web/dist
+.DS_Store
+

@@ -1,0 +1,25 @@
+:root {
+  color-scheme: light dark;
+  font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
+  --bg: #fafafa;
+  --bg-card: #fff;
+  --fg: #1a1a1a;
+  --fg-mute: #8a8a8a;
+  --border: #e6e6e6;
+  --accent: #2563eb;
+  --danger: #dc2626;
+  --warn: #d97706;
+  --ok: #059669;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #18181b;
+    --bg-card: #232327;
+    --fg: #f4f4f5;
+    --fg-mute: #888;
+    --border: #2f2f33;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); }
+button { font: inherit; cursor: pointer; }
