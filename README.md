@@ -22,11 +22,17 @@ WeChat doesn't transcribe voice messages, especially not from Japanese friends. 
 ## Quick start (普通用户)
 
 1. 装 [WeFlow](https://github.com/hicccc77/WeFlow)，登录微信，开启 HTTP API + Message Push
-2. 下 **`voice-jp.dmg`**（约 22MB） → [Releases](https://github.com/indulgers/voice-jp/releases)
-3. 拖进 Applications，**右键 → 打开**（绕 Gatekeeper）
-4. 浏览器自动弹出向导，4 步配完
+2. 打开终端，粘下面这一行回车：
 
-详细图文步骤见 **[INSTALL.md](INSTALL.md)**。
+   ```sh
+   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/indulgers/voice-jp/main/install.sh)"
+   ```
+
+3. 浏览器自动弹出向导，4 步配完（粘 token / 下模型 / 选监听联系人）
+
+> 为什么必须用终端而不是双击 dmg？因为 voice-jp 没付苹果 $99/年的签名费，Sequoia 会把浏览器下载的 dmg 一律标"已损坏"。这一行用 `curl` 直接拿 dmg —— `curl` 下载的文件不会被 macOS 拦截。**升级新版本也是同一行**。
+
+完整图文步骤、常见问题、隐私说明见 **[INSTALL.md](INSTALL.md)**。
 
 ## Develop / Build
 
